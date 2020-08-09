@@ -8,6 +8,7 @@ INPUTDIR = "schroedinger_data"
 "name of the output directory"
 OUTPUTFILE = 'solve.out'
 
+
 def read_input():
     """Reads in the data for a given quantum system.
 
@@ -22,20 +23,18 @@ def read_input():
         Array (xx, potential) the x-coordinates and the potential.
         String (InterpType) the type of interpolation.
     """
-    inputfile = os.path.join(INPUTDIR, 'solve.in')
+    inputfile = os.path.join(INPUTDIR, 'schrodinger.inp')
     input = open(inputfile, "r")
     seperatedinput = input.read().splitlines()
-    mass = seperatedinput[0]
+    mass = float(seperatedinput[0])
     xlimitsandpoints = seperatedinput[1].split()
-    xlimits = np.empty((2,1))
+    xlimits = np.empty((2, 1))
     xlimits[0] = xlimitsandpoints[0]
     xlimits[1] = xlimitsandpoints[1]
-    points = xlimitsandpoints[2]
-    eigenvalues = seperatedinput[2].split()
-    #eigenvalues[0, 0] = eigenvalueslist[0]
-    #eigenvalues[0, 1] = eigenvalueslist[1]
+    points = int(xlimitsandpoints[2])
+    eigenvalues = [int(seperatedinput[2].split()[0]), int(seperatedinput[2].split()[1])]
     interptype = str(seperatedinput[3])
-    numinterp = seperatedinput[4]
+    numinterp = float(seperatedinput[4])
     """xxandpotentials is created to form an array which connects the x
     coordinates with the assigned potentials.
     """
@@ -44,5 +43,6 @@ def read_input():
         xxandpotentialunorganized = seperatedinput[ii].split()
         xandpot[ii - 5,0] = xxandpotentialunorganized[0]
         xandpot[ii - 5,1] = xxandpotentialunorganized[1]
+    input.close()
     return mass, xlimits, points, eigenvalues, interptype, numinterp, xandpot
-#read_input()
+#print(read_input())
