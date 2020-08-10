@@ -23,8 +23,9 @@ def read_input():
         Array (xx, potential) the x-coordinates and the potential.
         String (InterpType) the type of interpolation.
     """
-    inputfile = os.path.join(INPUTDIR, 'schrodinger.inp')
+    inputfile = os.path.join(INPUTDIR, 'solve.in') # schrodinger.inp
     input = open(inputfile, "r")
+
     seperatedinput = input.read().splitlines()
     mass = float(seperatedinput[0])
     xlimitsandpoints = seperatedinput[1].split()
@@ -43,6 +44,7 @@ def read_input():
         xxandpotentialunorganized = seperatedinput[ii].split()
         xandpot[ii - 5,0] = xxandpotentialunorganized[0]
         xandpot[ii - 5,1] = xxandpotentialunorganized[1]
+
     input.close()
     return mass, xlimits, points, eigenvalues, interptype, numinterp, xandpot
-#print(read_input())
+# read_input()
