@@ -35,7 +35,7 @@ def hamiltonian():
     xx = np.linspace(solveio.read_input()[1][0], solveio.read_input()[1][1], n)
     pot = interpolation()
     mass = solveio.read_input()[0]
-    delta = (np.abs(xx[0] - xx[1])) / 2
+    delta = (np.abs(xx[0] - xx[1]))
     a = 1.0 / (mass * delta**2)
     maindiag = np.zeros(n)
     for ii in range(0, n):
@@ -52,7 +52,7 @@ def solver():
     temp = la.eigh_tridiagonal(maind, secd, select='i', select_range=neigen)
     energies, wavefunc = temp
     x = hamiltonian()[2]
-    return energies , wavefunc, x
+    return energies, wavefunc, x
 solver()
 
 
@@ -63,7 +63,7 @@ def normalization():
     for ii in range(0, nfunc):
         psisquared = 0
         for jj in range(0, npoints):
-            psisquared +=np.abs(wavefunc[:, ii][jj])**2
+            psisquared += np.abs(wavefunc[:, ii][jj])**2
         psisquared *= delta
         wavefunc[:, ii] = wavefunc[:, ii] / np.sqrt(psisquared)
     return wavefunc
@@ -85,13 +85,3 @@ def expectedvalue():
         expval[ii][1] = np.sqrt(np.abs(expval[ii][1]-expval[ii][0]**2))
     return expval
 # expectedvalue()
-
-
-
-
-
-
-
-
-
-

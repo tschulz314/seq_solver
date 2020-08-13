@@ -5,24 +5,42 @@ Created on Thu Aug 13 12:50:59 2020
 
 @author: tommy
 """
-
-import numpy as np
 import matplotlib.pyplot as plt
-import solveio
 import solver
 
-def wavevisualizer(stretch = 1):
+
+def wavevisualizer(stretch=1, ylim=None, xlim=None):
+    '''
+    Visualizes wavefunction.
+    Args:
+
+    Returns:
+
+    '''
     xx = solver.solver()[2]
     wavefunc = solver.normalization()
     energies = solver.solver()[0]
     pot = solver.interpolation()
+    expval = solver.expectedvalue()
     npoints, nfunc = wavefunc.shape
-    for ii in range (0, nfunc):
-        plt.plot(xx, stretch * solver.normalization()[:, ii] + energies[ii])
-        plt.hlines(energies[ii], xx[0], xx[npoints - 1])
+    ax1 = plt.subplot(1, 2, 1)
+    # ax1.set_ylim(0, 4)
     plt.xlabel("x [Bohr]")
     plt.ylabel("Energy [Hartree]")
-    plt.title("Potential, eigenstates, x")
+    plt.title(r'Potential, eigenstates, $\langle \mathrm{x} \rangle$')
+    for ii in range(0, nfunc):
+        plt.plot(xx, stretch * wavefunc[:, ii] + energies[ii], color='navy')
+        plt.plot(xx, pot(xx), color='black')
+        plt.hlines(energies[ii], xx[0], xx[npoints - 1], color='grey')
+        plt.plot(expval[ii, 0], energies[ii], 'rx', markersize=8)
+    ax2 = plt.subplot(1, 2, 2,  sharey=ax1)
+    ax2.get_yaxis().set_visible(False)
+    plt.xlabel("x [Bohr]")
+    plt.title(r'$\sigma_\mathrm{x}$')
+    for ii in range(0, nfunc):
+        plt.plot(expval[ii, 1], energies[ii], 'x', color='red',  markersize=8)
+        plt.hlines(energies[ii], 0, expval[nfunc-1, 1]*1.2, color='grey')
+    ax1.set_xlim(xlim)
+    ax1.set_ylim(ylim)
     plt.show()
-    return
-wavevisualizer(2)
+# wavevisualizer(stretch=.4, ylim=(0, 3))
