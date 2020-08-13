@@ -23,7 +23,7 @@ def read_input():
         Array (xx, potential) the x-coordinates and the potential.
         String (InterpType) the type of interpolation.
     """
-    inputfile = os.path.join(INPUTDIR, 'solve.in') # schrodinger.inp
+    inputfile = os.path.join(INPUTDIR, 'solve.in') #  schrodinger.inp
     input = open(inputfile, "r")
 
     seperatedinput = input.read().splitlines()

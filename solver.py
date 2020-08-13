@@ -8,7 +8,6 @@ Created on Wed Aug  5 11:08:25 2020
 import numpy as np
 import scipy.linalg as la
 import scipy.interpolate
-# import matplotlib.pyplot as plt
 import solveio
 
 
@@ -42,20 +41,19 @@ def hamiltonian():
     for ii in range(0, n):
         maindiag[ii] = a + pot(xx[ii])
     secdiag = (-a / 2) * np.ones(n-1)
-
     return maindiag, secdiag, xx, delta
-# hamiltonian()
+hamiltonian()
 
 
 def solver():
     maind = hamiltonian()[0]
     secd = hamiltonian()[1]
-    neigen = (solveio.read_input()[3][0]-1, solveio.read_input()[3][1]-1)
+    neigen = (solveio.read_input()[3][0] -1, solveio.read_input()[3][1]-1)
     temp = la.eigh_tridiagonal(maind, secd, select='i', select_range=neigen)
     energies, wavefunc = temp
     x = hamiltonian()[2]
-    return energies, wavefunc, x
-# solver()
+    return energies , wavefunc, x
+solver()
 
 
 def normalization():
@@ -65,7 +63,8 @@ def normalization():
     for ii in range(0, nfunc):
         psisquared = 0
         for jj in range(0, npoints):
-            psisquared += delta * np.abs(wavefunc[:, ii][jj])**2
+            psisquared +=np.abs(wavefunc[:, ii][jj])**2
+        psisquared *= delta
         wavefunc[:, ii] = wavefunc[:, ii] / np.sqrt(psisquared)
     return wavefunc
 # normalization()
@@ -85,11 +84,9 @@ def expectedvalue():
         expval[ii][1] *= delta
         expval[ii][1] = np.sqrt(np.abs(expval[ii][1]-expval[ii][0]**2))
     return expval
-
 # expectedvalue()
 
-# plt.plot(solver()[2], normalization()[:, 2])
-# plt.show()
+
 
 
 
