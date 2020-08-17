@@ -8,56 +8,37 @@ Created on Wed Aug  5 11:08:25 2020
 import numpy as np
 import scipy.linalg as la
 import scipy.interpolate
-import solveio
 
 
-def interpolation():
+def interpolation(interpoltype, xknown, potknown):
     '''
     interpolates a given potential
     '''
-    xs = solveio.read_input()[6][:, 0]
-    pots = solveio.read_input()[6][:, 1]
-    if solveio.read_input()[4] == "linear":
-        pot = scipy.interpolate.interp1d(xs, pots)
-    elif solveio.read_input()[4] == "cspline":
-        pot = scipy.interpolate.CubicSpline(xs, pots)
+    if interpoltype == "linear":
+        pot = scipy.interpolate.interp1d(xknown, potknown)
+    elif interpoltype == "cspline":
+        pot = scipy.interpolate.CubicSpline(xknown, potknown)
     else:
-        pot = scipy.interpolate.KroghInterpolator(xs, pots)
+        pot = scipy.interpolate.KroghInterpolator(xknown, potknown)
     return pot
-# interpolation()
 
 
-def hamiltonian():
+def seqsolver(npoints, xx, pot, mass, delta, neigen):
     """
-    calculates the hamiltonian
+    calculates the hamiltonian for a given potential
     """
-    n = solveio.read_input()[2]
-    xx = np.linspace(solveio.read_input()[1][0], solveio.read_input()[1][1], n)
-    pot = interpolation()
-    mass = solveio.read_input()[0]
-    delta = (np.abs(xx[0] - xx[1]))
     a = 1.0 / (mass * delta**2)
-    maindiag = np.zeros(n)
-    for ii in range(0, n):
+    maindiag = np.zeros(npoints)
+    for ii in range(0, npoints):
         maindiag[ii] = a + pot(xx[ii])
-    secdiag = (-a / 2) * np.ones(n-1)
-    return maindiag, secdiag, xx, delta
-hamiltonian()
-
-
-def solver():
-    maind = hamiltonian()[0]
-    secd = hamiltonian()[1]
-    neigen = (solveio.read_input()[3][0] -1, solveio.read_input()[3][1]-1)
-    temp = la.eigh_tridiagonal(maind, secd, select='i', select_range=neigen)
+    secdiag = (-a / 2) * np.ones(npoints-1)
+    d1, d2 = maindiag, secdiag
+    temp = la.eigh_tridiagonal(d1, d2, select='i', select_range=neigen)
     energies, wavefunc = temp
     return energies, wavefunc
-# solver()
 
 
-def normalization():
-    delta = hamiltonian()[3]
-    wavefunc = solver()[1]
+def normalization(wavefunc, delta):
     npoints, nfunc = wavefunc.shape
     for ii in range(0, nfunc):
         psisquared = 0
@@ -66,14 +47,10 @@ def normalization():
         psisquared *= delta
         wavefunc[:, ii] = wavefunc[:, ii] / np.sqrt(psisquared)
     return wavefunc
-# normalization()
 
 
-def expectedvalue():
-    wavefunc = normalization()
+def expectedvalue(wavefunc, xx, delta):
     npoints, nfunc = wavefunc.shape
-    xx = hamiltonian()[2]
-    delta = hamiltonian()[3]
     expval = np.zeros((nfunc, 2), dtype="float")
     for ii in range(0, nfunc):
         for jj in range(0, npoints):
@@ -83,4 +60,3 @@ def expectedvalue():
         expval[ii][1] *= delta
         expval[ii][1] = np.sqrt(np.abs(expval[ii][1]-expval[ii][0]**2))
     return expval
-# expectedvalue()

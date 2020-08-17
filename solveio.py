@@ -9,7 +9,7 @@ INPUTDIR = "schroedinger_data"
 OUTPUTFILE = 'solve.out'
 
 
-def read_input():
+def read_input(inputdir):
     """Reads in the data for a given quantum system.
 
     Args:
@@ -23,7 +23,7 @@ def read_input():
         Array (xx, potential) the x-coordinates and the potential.
         String (InterpType) the type of interpolation.
     """
-    inputfile = os.path.join(INPUTDIR, 'schrodinger.inp') # solve.in
+    inputfile = os.path.join(inputdir, 'schrodinger.inp') # solve.in
     input = open(inputfile, "r")
 
     seperatedinput = input.read().splitlines()
@@ -47,4 +47,4 @@ def read_input():
 
     input.close()
     return mass, xlimits, points, eigenvalues, interptype, numinterp, xandpot
-# read_input()
+read_input("schroedinger_data")
