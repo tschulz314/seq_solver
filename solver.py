@@ -27,11 +27,11 @@ def seqsolver(npoints, xx, pot, mass, delta, neigen):
     """
     calculates the hamiltonian for a given potential
     """
-    a = 1.0 / (mass * delta**2)
+    aa = 1.0 / (mass * delta**2)
     maindiag = np.zeros(npoints)
     for ii in range(0, npoints):
-        maindiag[ii] = a + pot(xx[ii])
-    secdiag = (-a / 2) * np.ones(npoints-1)
+        maindiag[ii] = aa + pot(xx[ii])
+    secdiag = (-aa / 2) * np.ones(npoints-1)
     d1, d2 = maindiag, secdiag
     temp = la.eigh_tridiagonal(d1, d2, select='i', select_range=neigen)
     energies, wavefunc = temp
@@ -39,6 +39,9 @@ def seqsolver(npoints, xx, pot, mass, delta, neigen):
 
 
 def normalization(wavefunc, delta):
+    """
+    Normalizes given wavefunctions
+    """
     npoints, nfunc = wavefunc.shape
     for ii in range(0, nfunc):
         psisquared = 0
@@ -50,6 +53,10 @@ def normalization(wavefunc, delta):
 
 
 def expectedvalue(wavefunc, xx, delta):
+    """
+    Calculates the expeced values and uncertainties
+    for x for given wavefunctions
+    """
     npoints, nfunc = wavefunc.shape
     expval = np.zeros((nfunc, 2), dtype="float")
     for ii in range(0, nfunc):
