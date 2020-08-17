@@ -23,19 +23,22 @@ def interpolation(interpoltype, xknown, potknown):
     return pot
 
 
-def seqsolver(npoints, xx, pot, mass, delta, neigen):
+def seqsolver(xinfo, pot, mass, neigen):
     """
     calculates the hamiltonian for a given potential
     """
+    npoints = int(xinfo[2])
+    xx = np.linspace(xinfo[0], xinfo[1], npoints)
+    npoints = xx.shape[0]
+    delta = abs(xx[0] - xx[1])
     aa = 1.0 / (mass * delta**2)
-    maindiag = np.zeros(npoints)
+    maindi = np.zeros(npoints)
     for ii in range(0, npoints):
-        maindiag[ii] = aa + pot(xx[ii])
-    secdiag = (-aa / 2) * np.ones(npoints-1)
-    d1, d2 = maindiag, secdiag
-    temp = la.eigh_tridiagonal(d1, d2, select='i', select_range=neigen)
+        maindi[ii] = aa + pot(xx[ii])
+    secdi = (-aa / 2) * np.ones(npoints-1)
+    temp = la.eigh_tridiagonal(maindi, secdi, select='i', select_range=neigen)
     energies, wavefunc = temp
-    return energies, wavefunc
+    return energies, xx, wavefunc, delta
 
 
 def normalization(wavefunc, delta):

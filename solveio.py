@@ -1,7 +1,7 @@
 "contains routines to do file I/O for solve.py"
 
-import numpy as np
 import os.path
+import numpy as np
 
 
 def read_input(inputdir):

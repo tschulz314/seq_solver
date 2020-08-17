@@ -5,27 +5,28 @@ Created on Mon Aug 17 12:51:25 2020
 
 @author: tommy
 """
-import numpy as np
 import solveio
 import solver
 
 
-def main(inputdir):
-    interpoltype = solveio.read_input(inputdir="schroedinger_data")[3]
-    xknown = solveio.read_input(inputdir="schroedinger_data")[5][:, 0]
-    potknown = solveio.read_input(inputdir="schroedinger_data")[5][:, 1]
+def main(inputdir="schroedinger_data"):
+    """
+    Main function for solving the schroedinger equation
+    """
+    temp = solveio.read_input(inputdir)
+    interpoltype = temp[3]
+    xknown = temp[5][:, 0]
+    potknown = temp[5][:, 1]
     pot = solver.interpolation(interpoltype, xknown, potknown)
-    xinfo = solveio.read_input(inputdir="schroedinger_data")[1]
-    npoints = int(xinfo[2])
-    xx = np.linspace(xinfo[0], xinfo[1], npoints)
-    mass = solveio.read_input(inputdir="schroedinger_data")[0]
-    delta = abs(xx[0] - xx[1])
-    temp = solveio.read_input(inputdir="schroedinger_data")[2]
-    neigen = (temp[0] - 1, temp[1] - 1)
-    energies, wavefunc = solver.seqsolver(npoints, xx, pot, mass, delta, neigen)
+    xinfo = temp[1]
+    mass = temp[0]
+    eigenrange = temp[2][0] - 1, temp[2][1] - 1
+    catcher = solver.seqsolver(xinfo, pot, mass, eigenrange)
+    energies, xx, wavefunc, delta = catcher
     wavefunc = solver.normalization(wavefunc, delta)
     expval = solver.expectedvalue(wavefunc, xx, delta)
-    expval
+    print(expval)
+
 
 if __name__ == "__main__":
-    main("schroedinger_data")
+    main()
