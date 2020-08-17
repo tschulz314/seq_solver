@@ -51,9 +51,8 @@ def solver():
     neigen = (solveio.read_input()[3][0] -1, solveio.read_input()[3][1]-1)
     temp = la.eigh_tridiagonal(maind, secd, select='i', select_range=neigen)
     energies, wavefunc = temp
-    x = hamiltonian()[2]
-    return energies, wavefunc, x
-solver()
+    return energies, wavefunc
+# solver()
 
 
 def normalization():

@@ -17,14 +17,13 @@ def wavevisualizer(stretch=1, ylim=None, xlim=None):
     Returns:
 
     '''
-    xx = solver.solver()[2]
+    xx = solver.hamiltonian()[2]
     wavefunc = solver.normalization()
     energies = solver.solver()[0]
     pot = solver.interpolation()
     expval = solver.expectedvalue()
     npoints, nfunc = wavefunc.shape
     ax1 = plt.subplot(1, 2, 1)
-    # ax1.set_ylim(0, 4)
     plt.xlabel("x [Bohr]")
     plt.ylabel("Energy [Hartree]")
     plt.title(r'Potential, eigenstates, $\langle \mathrm{x} \rangle$')
