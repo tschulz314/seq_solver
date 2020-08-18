@@ -35,4 +35,5 @@ def read_input(inputdir):
         xandpot[ii - 5, 1] = xxandpotentialunorganized[1]
     input.close()
     return mass, xinfo, eigenvalues, interptype, numinterp, xandpot
-# read_input("schroedinger_data")
+read_input("schroedinger_data")
+
