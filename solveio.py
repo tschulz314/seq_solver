@@ -1,4 +1,4 @@
-"contains routines to do file I/O for solve.py"
+# contains routines to do file I/O for solve.py
 
 import os.path
 import numpy as np
@@ -36,3 +36,4 @@ def read_input(inputdir):
     input.close()
     return mass, xinfo, eigenvalues, interptype, numinterp, xandpot
 # read_input("schroedinger_data")
+
