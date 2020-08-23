@@ -36,4 +36,3 @@ def read_input(inputdir):
     input.close()
     return mass, xinfo, eigenvalues, interptype, numinterp, xandpot
 # read_input("schroedinger_data")
-
