@@ -8,8 +8,9 @@ import pytest
 import solveio
 import solverexec
 
+ABSOLUTE_TOLERANCE = 1e-9
+RELATIVE_TOLERANCE = 1e-8
 
-TOLERANCE = 1e-8
 TESTNAMES = ["assymetric_well", "double_well_lin",
              "double_well_spline", "finite_well",
              "harmonic_oscillator", "infinite_well"]
@@ -26,7 +27,8 @@ def test_potential(testname):
     potential = np.zeros(xx.shape[0])
     for ii in range(0, xx.shape[0]):
         potential[ii] = pot(xx[ii])
-    assert np.all(np.abs(refpotential - potential) < TOLERANCE)
+    assert np.allclose(refpotential, potential, atol=ABSOLUTE_TOLERANCE,
+                       rtol=RELATIVE_TOLERANCE)
 
 
 @pytest.mark.parametrize("testname", TESTNAMES)
@@ -36,4 +38,5 @@ def test_expvalues(testname):
     path = path.replace("/", "")
     path = os.path.join("testdata", path)
     expval = solverexec.main(inputdir=path, outputfiles=False)[2]
-    assert np.all(np.abs(refexpval - expval) < TOLERANCE)
+    assert np.allclose(refexpval, expval, atol=ABSOLUTE_TOLERANCE,
+                       rtol=RELATIVE_TOLERANCE)
