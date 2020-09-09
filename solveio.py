@@ -36,13 +36,19 @@ def read_input(inputdir):
     input.close()
     return mass, xinfo, eigenvalues, interptype, numinterp, xandpot
 
+
 def write_output(energies, xx, wavefunc, expval, pot):
-    """Creates a file with the solver results.
+    """Creates files of solver results.
 
     Args:
+        arrays: energies, xx, wavefunc, expval
+        xx dependent array: pot
 
+    Returns:
+        files: energies.dat, potential.dat, wavefuncs.dat, expvalues.dat
+        potential.dat and wavefuncs.dat include xx in the first row.
+        saves files into seq_solver directory for visualization.
     """
-    # = solverexec.main("schroedinger_data")
     np.savetxt("energies.dat", energies)
     solvedpot = np.empty((len(xx), 2), dtype=float)
     for ii in range(0, len(xx)):
@@ -56,4 +62,3 @@ def write_output(energies, xx, wavefunc, expval, pot):
             solvedwavefuncs[jj, kk + 1] = wavefunc[jj, kk]
     np.savetxt("wavefuncs.dat", solvedwavefuncs)
     np.savetxt("expvalues.dat", expval)
-#read_input("schroedinger_data")
