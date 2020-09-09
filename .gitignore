@@ -1,2 +1,7 @@
 __pycache__/
 docs/_build
+.spyproject/
+energies.dat
+expvalues.dat
+potential.dat
+wavefuncs.dat
