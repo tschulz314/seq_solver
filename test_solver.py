@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
 """
-Spyder Editor
-
-This is a temporary script file.
+Routines to test the solver:
 """

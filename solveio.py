@@ -64,3 +64,28 @@ def write_output(energies, xx, wavefunc, expval, pot):
             solvedwavefuncs[jj, kk + 1] = wavefunc[jj, kk]
     np.savetxt("wavefuncs.dat", solvedwavefuncs)
     np.savetxt("expvalues.dat", expval)
+
+
+def _read_testdata(potname, expvalname):
+    """ Reads refernce data fur unit testing.
+    Args:
+        potname (str): test potential filename
+        expvalname (str): test expected values filename
+    Returns:
+        pot: array containing the potential
+        expval: array containg the expected values
+
+    """
+    potpath = os.path.join("testdata", potname)
+    expvalpath = os.path.join("testdata", expvalname)
+    pot = np.loadtxt(potpath)[:, 1]
+    expval = np.loadtxt(expvalpath)
+    return pot, expval
+
+# _read_testdata("finite_well.pot", "finite_well.expval")
+
+
+
+
+
+

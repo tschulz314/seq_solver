@@ -5,7 +5,7 @@ import solveio
 import solver
 
 
-def main(inputdir="testdata/harmonic_oscillator.inp"):
+def main(inputdir="testdata/infinite_well.inp"):
     """
     Main function for solving the schroedinger equation
     """
