@@ -25,7 +25,7 @@ def main(inputdir="schroedinger_data"):
     energies, xx, wavefunc, delta = catcher
     wavefunc = solver.normalization(wavefunc, delta)
     expval = solver.expectedvalue(wavefunc, xx, delta)
-    print(expval)
+    write_output(energies, xx, wavefunc, expval, pot)
 
 
 if __name__ == "__main__":
