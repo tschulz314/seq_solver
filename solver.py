@@ -1,9 +1,5 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
-Created on Wed Aug  5 11:08:25 2020
-
-@author: tommy
+Routines for solving the one dimensional schroedinger equation:
 """
 import numpy as np
 import scipy.linalg as la
@@ -11,8 +7,16 @@ import scipy.interpolate
 
 
 def interpolation(interpoltype, xknown, potknown):
-    '''
-    interpolates a given potential
+    '''Interpolates the potential for given x and potential refrence values
+
+    Args:
+        interpoltype (str): Interpolationtype
+                            (linear, cubic spline or polynomial)
+        xknown (array): refrence x values to interpolate
+        potknown (array): refrence potential values to interpolate
+
+    Returns:
+        pot: function containing the interpolated potential
     '''
     if interpoltype == "linear":
         pot = scipy.interpolate.interp1d(xknown, potknown)
@@ -26,6 +30,16 @@ def interpolation(interpoltype, xknown, potknown):
 def seqsolver(xinfo, pot, mass, neigen):
     """
     calculates the hamiltonian for a given potential
+
+    Args:
+        xinfo (array): contains information about the x range
+        pot(function): function containing the interpolated potential
+        mass (float): mass of the quantum mechanical particle
+        neigen (array): cotaines the range of eigenstates to calculate
+    Returns:
+        energies, x values, wavefuntions and
+        delta (axillary size for further calculations)
+
     """
     npoints = int(xinfo[2])
     xx = np.linspace(xinfo[0], xinfo[1], npoints)
@@ -44,6 +58,12 @@ def seqsolver(xinfo, pot, mass, neigen):
 def normalization(wavefunc, delta):
     """
     Normalizes given wavefunctions
+
+    Args:
+        wavefunx (array): contains the wavefuntions
+        delta (float): axillary size
+    Returns:
+        array containing the normalized wavefunctions
     """
     npoints, nfunc = wavefunc.shape
     for ii in range(0, nfunc):
@@ -57,8 +77,16 @@ def normalization(wavefunc, delta):
 
 def expectedvalue(wavefunc, xx, delta):
     """
-    Calculates the expeced values and uncertainties
+    Calculates the expected values and uncertainties
     for x for given wavefunctions
+
+    Args:
+        wavefunx (array): contains the wavefuntions
+        xx (array): contains the x values
+        delta (float): axillary size
+    Returns:
+        array conatining the expected values and uncertainties
+        for the eigenstates
     """
     npoints, nfunc = wavefunc.shape
     expval = np.zeros((nfunc, 2), dtype="float")
