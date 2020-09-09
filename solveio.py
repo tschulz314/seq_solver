@@ -35,4 +35,30 @@ def read_input(inputdir):
         xandpot[ii - 5, 1] = xxandpotentialunorganized[1]
     input.close()
     return mass, xinfo, eigenvalues, interptype, numinterp, xandpot
-# read_input("schroedinger_data")
+
+
+def write_output(energies, xx, wavefunc, expval, pot):
+    """Creates files of solver results.
+
+    Args:
+        arrays: energies, xx, wavefunc, expval
+        xx dependent array: pot
+
+    Returns:
+        files: energies.dat, potential.dat, wavefuncs.dat, expvalues.dat
+        potential.dat and wavefuncs.dat include xx in the first row.
+        saves files into seq_solver directory for visualization.
+    """
+    np.savetxt("energies.dat", energies)
+    solvedpot = np.empty((len(xx), 2), dtype=float)
+    for ii in range(0, len(xx)):
+        solvedpot[ii, 0] = xx[ii]
+        solvedpot[ii, 1] = pot(xx[ii])
+    np.savetxt("potential.dat", solvedpot)
+    solvedwavefuncs = np.empty((len(xx), len(wavefunc[0]) + 1), dtype=float)
+    for jj in range(0, len(xx)):
+        solvedwavefuncs[jj, 0] = xx[jj]
+        for kk in range(0, len(wavefunc[0])):
+            solvedwavefuncs[jj, kk + 1] = wavefunc[jj, kk]
+    np.savetxt("wavefuncs.dat", solvedwavefuncs)
+    np.savetxt("expvalues.dat", expval)
