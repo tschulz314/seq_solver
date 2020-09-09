@@ -1,4 +1,4 @@
-"contains routines to do file I/O for solve.py"
+# contains routines to do file I/O for solve.py
 
 import os.path
 import numpy as np
@@ -18,7 +18,7 @@ def read_input(inputdir):
         Array (xx, potential) the x-coordinates and the potential.
         String (InterpType) the type of interpolation.
     """
-    inputfile = os.path.join(inputdir, 'schrodinger.inp')
+    inputfile = os.path.join(inputdir)# , 'schrodinger.inp')
     input = open(inputfile, "r")
     seperatedinput = input.read().splitlines()
     mass = float(seperatedinput[0])
