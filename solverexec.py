@@ -5,7 +5,7 @@ import solveio
 import solver
 
 
-def main(inputdir="testdata/infinite_well.inp"):
+def main(inputdir="testdata/assymetric_well.inp", outputfiles=True):
     """
     Main function for solving the schroedinger equation
     """
@@ -21,7 +21,10 @@ def main(inputdir="testdata/infinite_well.inp"):
     energies, xx, wavefunc, delta = catcher
     wavefunc = solver.normalization(wavefunc, delta)
     expval = solver.expectedvalue(wavefunc, xx, delta)
-    solveio.write_output(energies, xx, wavefunc, expval, pot)
+    if outputfiles is True:
+        solveio.write_output(energies, xx, wavefunc, expval, pot)
+    else:
+        return xx, pot, expval
 
 
 if __name__ == "__main__":

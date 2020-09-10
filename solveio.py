@@ -66,26 +66,23 @@ def write_output(energies, xx, wavefunc, expval, pot):
     np.savetxt("expvalues.dat", expval)
 
 
-def _read_testdata(potname, expvalname):
+def _read_testdata(filename):
     """ Reads refernce data fur unit testing.
     Args:
-        potname (str): test potential filename
-        expvalname (str): test expected values filename
+        filename (str): name of the reference file
     Returns:
-        pot: array containing the potential
+        pot: array containing theinterpolated  potential
         expval: array containg the expected values
 
     """
-    potpath = os.path.join("testdata", potname)
-    expvalpath = os.path.join("testdata", expvalname)
+    potpath = os.path.join(filename, ".pot")
+    potpath = potpath.replace("/", "")
+    potpath = os.path.join("testdata", potpath)
+    expvalpath = os.path.join(filename, ".expval")
+    expvalpath = expvalpath.replace("/", "")
+    expvalpath = os.path.join("testdata", expvalpath)
     pot = np.loadtxt(potpath)[:, 1]
     expval = np.loadtxt(expvalpath)
     return pot, expval
 
-# _read_testdata("finite_well.pot", "finite_well.expval")
-
-
-
-
-
-
+# _read_testdata("double_well_lin")
