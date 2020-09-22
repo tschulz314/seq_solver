@@ -24,7 +24,8 @@ def main(inputdir="testdata/double_well_spline.inp", outputfiles=True):
     if outputfiles is True:
         solveio.write_output(energies, xx, wavefunc, expval, pot)
     else:
-        return xx, pot, expval
+        return xx, pot, expval, energies
+
 
 if __name__ == "__main__":
     main()

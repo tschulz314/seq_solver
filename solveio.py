@@ -81,8 +81,12 @@ def _read_testdata(filename):
     expvalpath = os.path.join(filename, ".expval")
     expvalpath = expvalpath.replace("/", "")
     expvalpath = os.path.join("testdata", expvalpath)
+    energypath = os.path.join(filename, ".energy")
+    energypath = energypath.replace("/", "")
+    energypath = os.path.join("testdata", energypath)
     pot = np.loadtxt(potpath)[:, 1]
     expval = np.loadtxt(expvalpath)
-    return pot, expval
+    energy = np.loadtxt(energypath)
+    return pot, expval, energy
 
 # _read_testdata("double_well_lin")
