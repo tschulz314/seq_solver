@@ -40,3 +40,14 @@ def test_expvalues(testname):
     expval = solverexec.main(inputdir=path, outputfiles=False)[2]
     assert np.allclose(refexpval, expval, atol=ABSOLUTE_TOLERANCE,
                        rtol=RELATIVE_TOLERANCE)
+
+
+@pytest.mark.parametrize("testname", TESTNAMES)
+def test_energy(testname):
+    refenergy = solveio._read_testdata(testname)[2]
+    path = os.path.join(testname, ".inp")
+    path = path.replace("/", "")
+    path = os.path.join("testdata", path)
+    energy = solverexec.main(inputdir=path, outputfiles=False)[3]
+    assert np.allclose(refenergy, energy, atol=ABSOLUTE_TOLERANCE,
+                       rtol=RELATIVE_TOLERANCE)
