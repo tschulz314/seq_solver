@@ -39,7 +39,7 @@ def read_input(inputdir):
     return mass, xinfo, eigenvalues, interptype, numinterp, xandpot
 
 
-def write_output(energies, xx, wavefunc, expval, pot):
+def write_output(energies, xx, wavefunc, expval, pot, inputdir):
     """Creates files of solver results.
 
     Args:

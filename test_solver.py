@@ -6,6 +6,7 @@ import numpy as np
 import os.path
 import pytest
 import solveio
+import solver
 import solverexec
 
 ABSOLUTE_TOLERANCE = 1e-9
@@ -14,6 +15,25 @@ RELATIVE_TOLERANCE = 1e-8
 TESTNAMES = ["assymetric_well", "double_well_lin",
              "double_well_spline", "finite_well",
              "harmonic_oscillator", "infinite_well"]
+
+
+def get_solver_data(inputdir):
+    """
+    Function
+    """
+    temp = solveio.read_input(inputdir)
+    interpoltype = temp[3]
+    xknown = temp[5][:, 0]
+    potknown = temp[5][:, 1]
+    pot = solver.interpolation(interpoltype, xknown, potknown)
+    xinfo = temp[1]
+    mass = temp[0]
+    eigenrange = temp[2][0] - 1, temp[2][1] - 1
+    catcher = solver.seqsolver(xinfo, pot, mass, eigenrange)
+    energies, xx, wavefunc, delta = catcher
+    wavefunc = solver.normalization(wavefunc, delta)
+    expval = solver.expectedvalue(wavefunc, xx, delta)
+    return xx, pot, expval, energies
 
 
 @pytest.mark.parametrize("testname", TESTNAMES)

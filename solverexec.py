@@ -5,7 +5,7 @@ import solveio
 import solver
 
 
-def main(inputdir="testdata/double_well_spline.inp", outputfiles=True):
+def main(inputdir, outputfiles=True):
     """
     Main function for solving the schroedinger equation
     """
@@ -22,10 +22,12 @@ def main(inputdir="testdata/double_well_spline.inp", outputfiles=True):
     wavefunc = solver.normalization(wavefunc, delta)
     expval = solver.expectedvalue(wavefunc, xx, delta)
     if outputfiles is True:
-        solveio.write_output(energies, xx, wavefunc, expval, pot)
+        solveio.write_output(energies, xx, wavefunc, expval, pot, inputdir)
     else:
         return xx, pot, expval, energies
 
 
 if __name__ == "__main__":
-    main()
+    inputdir = input("Enter the path to the inputfile 'schrodinger.inp': ")
+
+    main(inputdir)
