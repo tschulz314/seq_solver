@@ -5,7 +5,7 @@ import solveio
 import solver
 
 
-def main(inputdir="testdata/assymetric_well.inp", outputfiles=True):
+def main(inputdir="testdata/double_well_spline.inp", outputfiles=True):
     """
     Main function for solving the schroedinger equation
     """

@@ -12,8 +12,8 @@ def interpolation(interpoltype, xknown, potknown):
     Args:
         interpoltype (str): Interpolationtype
                             (linear, cubic spline or polynomial)
-        xknown (array): refrence x values to interpolate
-        potknown (array): refrence potential values to interpolate
+        xknown (array): reference x values to interpolate
+        potknown (array): reference potential values to interpolate
 
     Returns:
         pot: function containing the interpolated potential
@@ -23,7 +23,7 @@ def interpolation(interpoltype, xknown, potknown):
     elif interpoltype == "cspline":
         pot = scipy.interpolate.CubicSpline(xknown, potknown)
     else:
-        pot = scipy.interpolate.KroghInterpolator(xknown, potknown)
+        pot = scipy.interpolate.KroghInterpolator(xknown, potknown, bc_type='natural')
     return pot
 
 
@@ -60,7 +60,7 @@ def normalization(wavefunc, delta):
     Normalizes given wavefunctions
 
     Args:
-        wavefunx (array): contains the wavefuntions
+        wavefunc (array): contains the wavefuntions
         delta (float): axillary size
     Returns:
         array containing the normalized wavefunctions
@@ -78,7 +78,7 @@ def normalization(wavefunc, delta):
 def expectedvalue(wavefunc, xx, delta):
     """
     Calculates the expected values and uncertainties
-    for x for given wavefunctions
+    of x for given wavefunctions
 
     Args:
         wavefunx (array): contains the wavefuntions

@@ -38,4 +38,4 @@ def wavevisualizer(stretch=1, xlim=None, ylim=None):
     ax1.set_xlim(xlim)
     ax1.set_ylim(ylim)
     plt.show()
-# wavevisualizer(stretch=.4, ylim=(0, 3))
+wavevisualizer(stretch=.4, ylim=(0, 3))
