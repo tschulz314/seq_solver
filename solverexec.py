@@ -26,5 +26,6 @@ def main(inputdir="testdata/double_well_spline.inp", outputfiles=True):
     else:
         return xx, pot, expval
 
+
 if __name__ == "__main__":
     main()
