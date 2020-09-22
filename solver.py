@@ -23,7 +23,7 @@ def interpolation(interpoltype, xknown, potknown):
     elif interpoltype == "cspline":
         pot = scipy.interpolate.CubicSpline(xknown, potknown)
     else:
-        pot = scipy.interpolate.KroghInterpolator(xknown, potknown)
+        pot = scipy.interpolate.KroghInterpolator(xknown, potknown, bc_type='natural')
     return pot
 
 
