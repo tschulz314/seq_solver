@@ -7,7 +7,6 @@ import os.path
 import pytest
 import solveio
 import solver
-import solverexec
 
 ABSOLUTE_TOLERANCE = 1e-9
 RELATIVE_TOLERANCE = 1e-8
@@ -38,36 +37,33 @@ def get_solver_data(inputdir):
 
 @pytest.mark.parametrize("testname", TESTNAMES)
 def test_potential(testname):
-    refpotential = solveio._read_testdata(testname)[0]
-    path = os.path.join(testname, ".inp")
-    path = path.replace("/", "")
-    path = os.path.join("testdata", path)
-    temp = solverexec.main(inputdir=path, outputfiles=False)
+    path = os.path.join("testdata", testname)
+    temp = get_solver_data(path)
     xx, pot = temp[0], temp[1]
     potential = np.zeros(xx.shape[0])
     for ii in range(0, xx.shape[0]):
         potential[ii] = pot(xx[ii])
+    path = os.path.join(path, testname)
+    refpotential = solveio._read_testdata(path)[0]
     assert np.allclose(refpotential, potential, atol=ABSOLUTE_TOLERANCE,
                        rtol=RELATIVE_TOLERANCE)
 
 
 @pytest.mark.parametrize("testname", TESTNAMES)
 def test_expvalues(testname):
-    refexpval = solveio._read_testdata(testname)[1]
-    path = os.path.join(testname, ".inp")
-    path = path.replace("/", "")
-    path = os.path.join("testdata", path)
-    expval = solverexec.main(inputdir=path, outputfiles=False)[2]
+    path = os.path.join("testdata", testname)
+    expval = get_solver_data(path)[2]
+    path = os.path.join(path, testname)
+    refexpval = solveio._read_testdata(path)[1]
     assert np.allclose(refexpval, expval, atol=ABSOLUTE_TOLERANCE,
                        rtol=RELATIVE_TOLERANCE)
 
 
 @pytest.mark.parametrize("testname", TESTNAMES)
 def test_energy(testname):
-    refenergy = solveio._read_testdata(testname)[2]
-    path = os.path.join(testname, ".inp")
-    path = path.replace("/", "")
-    path = os.path.join("testdata", path)
-    energy = solverexec.main(inputdir=path, outputfiles=False)[3]
+    path = os.path.join("testdata", testname)
+    energy = get_solver_data(path)[3]
+    path = os.path.join(path, testname)
+    refenergy = solveio._read_testdata(path)[2]
     assert np.allclose(refenergy, energy, atol=ABSOLUTE_TOLERANCE,
                        rtol=RELATIVE_TOLERANCE)
