@@ -5,7 +5,7 @@ import solveio
 import solver
 
 
-def main(inputdir, outputfiles=True):
+def main(inputdir):
     """
     Main function for solving the schroedinger equation
     """
@@ -21,13 +21,9 @@ def main(inputdir, outputfiles=True):
     energies, xx, wavefunc, delta = catcher
     wavefunc = solver.normalization(wavefunc, delta)
     expval = solver.expectedvalue(wavefunc, xx, delta)
-    if outputfiles is True:
-        solveio.write_output(energies, xx, wavefunc, expval, pot, inputdir)
-    else:
-        return xx, pot, expval, energies
+    solveio.write_output(energies, xx, wavefunc, expval, pot, inputdir)
 
 
 if __name__ == "__main__":
     inputdir = input("Enter the path to the inputfile 'schrodinger.inp': ")
-
     main(inputdir)

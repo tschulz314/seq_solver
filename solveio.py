@@ -20,7 +20,7 @@ def read_input(inputdir):
         Array (xx, potential) the x-coordinates and the potential.
         String (InterpType) the type of interpolation.
     """
-    inputfile = os.path.join(inputdir)
+    inputfile = os.path.join(inputdir, "schrodinger.inp")
     input = open(inputfile, "r")
     seperatedinput = input.read().splitlines()
     mass = float(seperatedinput[0])
@@ -51,39 +51,33 @@ def write_output(energies, xx, wavefunc, expval, pot, inputdir):
         potential.dat and wavefuncs.dat include xx in the first row.
         saves files into seq_solver directory for visualization.
     """
-    np.savetxt("energies.dat", energies)
+    np.savetxt(inputdir + "/energies.dat", energies)
     solvedpot = np.empty((len(xx), 2), dtype=float)
     for ii in range(0, len(xx)):
         solvedpot[ii, 0] = xx[ii]
         solvedpot[ii, 1] = pot(xx[ii])
-    np.savetxt("potential.dat", solvedpot)
+    np.savetxt(inputdir + "/potential.dat", solvedpot)
     solvedwavefuncs = np.empty((len(xx), len(wavefunc[0]) + 1), dtype=float)
     for jj in range(0, len(xx)):
         solvedwavefuncs[jj, 0] = xx[jj]
         for kk in range(0, len(wavefunc[0])):
             solvedwavefuncs[jj, kk + 1] = wavefunc[jj, kk]
-    np.savetxt("wavefuncs.dat", solvedwavefuncs)
-    np.savetxt("expvalues.dat", expval)
+    np.savetxt(inputdir + "/wavefuncs.dat", solvedwavefuncs)
+    np.savetxt(inputdir + "/expvalues.dat", expval)
 
 
-def _read_testdata(filename):
+def _read_testdata(inputdir):
     """ Reads refernce data fur unit testing.
     Args:
-        filename (str): name of the reference file
+        inputdir (str): name of the input directory
     Returns:
         pot: array containing theinterpolated  potential
         expval: array containg the expected values
 
     """
-    potpath = os.path.join(filename, ".pot")
-    potpath = potpath.replace("/", "")
-    potpath = os.path.join("testdata", potpath)
-    expvalpath = os.path.join(filename, ".expval")
-    expvalpath = expvalpath.replace("/", "")
-    expvalpath = os.path.join("testdata", expvalpath)
-    energypath = os.path.join(filename, ".energy")
-    energypath = energypath.replace("/", "")
-    energypath = os.path.join("testdata", energypath)
+    potpath = inputdir + ".pot"
+    expvalpath = inputdir + ".expval"
+    energypath = inputdir + ".energy"
     pot = np.loadtxt(potpath)[:, 1]
     expval = np.loadtxt(expvalpath)
     energy = np.loadtxt(energypath)
