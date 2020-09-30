@@ -13,11 +13,6 @@ def wavevisualizer(stretch=1, xlim=None, ylim=None):
     Returns:
 
     '''
-    xx = solver.hamiltonian()[2]
-    wavefunc = solver.normalization()
-    energies = solver.solver()[0]
-    pot = solver.interpolation()
-    expval = solver.expectedvalue()
     npoints, nfunc = wavefunc.shape
     ax1 = plt.subplot(1, 2, 1)
     plt.xlabel("x [Bohr]")
