@@ -65,6 +65,18 @@ def write_output(energies, xx, wavefunc, expval, pot, inputdir):
     np.savetxt(os.path.join(inputdir, "wavefuncs.dat"), solvedwavefuncs)
     np.savetxt(os.path.join(inputdir, "expvalues.dat"), expval)
 
+def _read_results(inputdir):
+    energiespath = os.path.join(inputdir, "energies.dat")
+    expvalpath = os.path.join(inputdir, "expvalues.dat")
+    potpath = os.path.join(inputdir, "potential.dat")
+    wavefuncspath = os.path.join(inputdir, "wavefuncs.dat")
+    energies = np.loadtxt(energiespath)
+    expval = np.loadtxt(expvalspath)
+    pot = np.loadtxt(potpath)
+    xx = np.loadtxt(wavefuncspath)[:, 0]
+    wavefuncs = np.loadtxt(wavefuncspath)[:, 1:]
+    return xx, wavefuncs, energies, pot, expval
+
 
 def _read_testdata(inputdir):
     """ Reads refernce data fur unit testing.
