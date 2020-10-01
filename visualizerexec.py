@@ -5,30 +5,33 @@ schroedinger equation.
 import solveio
 import visualizer
 import matplotlib.pyplot as plt
+import os.path
 
 
-def main(maindir, stretch, xlim, ylim, inputpdf):
+def main(inputdir, stretch, xlim, ylim, inputpdf):
     """
     Main function for visualizing the results of the one dimensional
     schroedinger equation.
     """
-    xx, wavefuncs, energies, pot, expval = solveio._read_results(maindir)
+    xx, wavefuncs, energies, pot, expval = solveio._read_results(inputdir)
     visualizer.wavevisualizer(xx, wavefuncs, energies, pot, expval, stretch, xlim, ylim)
     if inputpdf == "Y":
-        plt.savefig("figurename.pdf")
+        path = os.path.join(inputdir, "schrodinger_plot.pdf")
+        plt.savefig(path)
     else:
         plt.show()
 
 
 if __name__ == "__main__":
-    #maindir = input("Enter the path to your main project directory: ")
-    #stretch = float(input("Enter an integer for scaling the visualizations: "))
-    #xlim = input("Enter your preferred limits for the x-axis: ")
-    #ylim = input("..and your preferred limits for the y-axis: ")
-    #inputpdf = input("Do you want do save your results as a pdf? (Y/N): ")
-    maindir = "testdir/"
-    stretch = 0.3
-    xlim = -5, 5
-    ylim = -0.1, 2.5
-    inputpdf = "N"
-    main(maindir, stretch, xlim, ylim, inputpdf)
+    inputdir = input("Enter the path to the files to plot: ")
+    stretch = float(input("Enter a number to scale the wavefunctions(float, default=1): ") or 1.0)
+    try:
+        xlim = eval(input("Set the x limits (xmin, xmax): ") )
+    except SyntaxError:
+        xlim = None
+    try:
+        ylim = eval(input("Set the y limits (ymin, ymax): ") )
+    except SyntaxError:
+        ylim = None
+    inputpdf = input("Save results as a pdf? (Y/N): ")
+    main(inputdir, stretch, xlim, ylim, inputpdf)

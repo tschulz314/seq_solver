@@ -78,7 +78,6 @@ def _read_results(maindir):
     wavefuncs = np.loadtxt(wavefuncspath)[:, 1:]
     return xx, wavefuncs, energies, pot, expval
 
-_read_results("testdir")
 
 def _read_testdata(inputdir):
     """ Reads refernce data fur unit testing.
