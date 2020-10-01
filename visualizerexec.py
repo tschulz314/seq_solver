@@ -21,9 +21,14 @@ def main(maindir, stretch, xlim, ylim, inputpdf):
 
 
 if __name__ == "__main__":
-    maindir = input("Enter the path to your main project directory: ")
-    stretch = float(input("Enter an integer for scaling the visualizations: "))
-    xlim = input("Enter your preferred limits for the x-axis: ")
-    ylim = input("..and your preferred limits for the y-axis: ")
-    inputpdf = input("Do you want do save your results as a pdf? (Y/N): ")
+    #maindir = input("Enter the path to your main project directory: ")
+    #stretch = float(input("Enter an integer for scaling the visualizations: "))
+    #xlim = input("Enter your preferred limits for the x-axis: ")
+    #ylim = input("..and your preferred limits for the y-axis: ")
+    #inputpdf = input("Do you want do save your results as a pdf? (Y/N): ")
+    maindir = "testdir/"
+    stretch = 0.3
+    xlim = -5, 5
+    ylim = -0.1, 2.5
+    inputpdf = "N"
     main(maindir, stretch, xlim, ylim, inputpdf)
