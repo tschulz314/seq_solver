@@ -65,13 +65,14 @@ def write_output(energies, xx, wavefunc, expval, pot, inputdir):
     np.savetxt(os.path.join(inputdir, "wavefuncs.dat"), solvedwavefuncs)
     np.savetxt(os.path.join(inputdir, "expvalues.dat"), expval)
 
-def _read_results(inputdir):
-    energiespath = os.path.join(inputdir, "energies.dat")
-    expvalpath = os.path.join(inputdir, "expvalues.dat")
-    potpath = os.path.join(inputdir, "potential.dat")
-    wavefuncspath = os.path.join(inputdir, "wavefuncs.dat")
+
+def _read_results(maindir):
+    energiespath = os.path.join(maindir, "energies.dat")
+    expvalpath = os.path.join(maindir, "expvalues.dat")
+    potpath = os.path.join(maindir, "potential.dat")
+    wavefuncspath = os.path.join(maindir, "wavefuncs.dat")
     energies = np.loadtxt(energiespath)
-    expval = np.loadtxt(expvalspath)
+    expval = np.loadtxt(expvalpath)
     pot = np.loadtxt(potpath)
     xx = np.loadtxt(wavefuncspath)[:, 0]
     wavefuncs = np.loadtxt(wavefuncspath)[:, 1:]
