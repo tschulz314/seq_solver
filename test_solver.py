@@ -5,8 +5,8 @@ Routines to test the solver:
 import numpy as np
 import os.path
 import pytest
-import solveio
-import solver
+import schrodinger_solver.solveio as solveio
+import schrodinger_solver.solver as solver
 
 ABSOLUTE_TOLERANCE = 1e-9
 RELATIVE_TOLERANCE = 1e-8

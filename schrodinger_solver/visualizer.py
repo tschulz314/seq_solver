@@ -4,7 +4,8 @@ Routine to visualize wave functions:
 import matplotlib.pyplot as plt
 import numpy as np
 
-def wavevisualizer(xx, wavefuncs, energies, pot, expval, stretch=1, xlim=None, ylim=None):
+def wavevisualizer(xx, wavefuncs, energies, pot,
+                   expval, stretch=1, xlim=None, ylim=None):
     '''
     Visualizes wavefunction.
     Args:

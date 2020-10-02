@@ -1,7 +1,6 @@
 """
 Routines for file I/O:
 """
-
 import os.path
 import numpy as np
 
@@ -10,7 +9,7 @@ def read_input(inputdir):
     """Reads in the data for a given quantum system.
 
     Args:
-        directory: Directory containing the file with the QM-system details.
+        inpudir: Directory containing the file with the QM-system details.
 
     Returns:
         Value (mass, points, numberinterpolation) the mass,
@@ -49,7 +48,6 @@ def write_output(energies, xx, wavefunc, expval, pot, inputdir):
     Returns:
         files: energies.dat, potential.dat, wavefuncs.dat, expvalues.dat
         potential.dat and wavefuncs.dat include xx in the first row.
-        saves files into seq_solver directory for visualization.
     """
     np.savetxt(os.path.join(inputdir, "energies.dat"), energies)
     solvedpot = np.empty((len(xx), 2), dtype=float)
@@ -66,11 +64,19 @@ def write_output(energies, xx, wavefunc, expval, pot, inputdir):
     np.savetxt(os.path.join(inputdir, "expvalues.dat"), expval)
 
 
-def _read_results(maindir):
-    energiespath = os.path.join(maindir, "energies.dat")
-    expvalpath = os.path.join(maindir, "expvalues.dat")
-    potpath = os.path.join(maindir, "potential.dat")
-    wavefuncspath = os.path.join(maindir, "wavefuncs.dat")
+def _read_results(inputdir):
+    """ Reads the results of the solver.
+    Args:
+        inputdir (str): name of the input directory
+    Returns:
+        pot: array containing theinterpolated  potential
+        expval: array containg the expected values
+
+    """
+    energiespath = os.path.join(inputdir, "energies.dat")
+    expvalpath = os.path.join(inputdir, "expvalues.dat")
+    potpath = os.path.join(inputdir, "potential.dat")
+    wavefuncspath = os.path.join(inputdir, "wavefuncs.dat")
     energies = np.loadtxt(energiespath)
     expval = np.loadtxt(expvalpath)
     pot = np.loadtxt(potpath)[:, 1]
@@ -86,7 +92,6 @@ def _read_testdata(inputdir):
     Returns:
         pot: array containing theinterpolated  potential
         expval: array containg the expected values
-
     """
     potpath = inputdir + ".pot"
     expvalpath = inputdir + ".expval"

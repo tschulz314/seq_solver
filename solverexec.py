@@ -1,8 +1,8 @@
 """
 Executable python script for solving the one dimensinal schroedinger equation:
 """
-import solveio
-import solver
+import schrodinger_solver.solveio as solveio
+import schrodinger_solver.solver as solver
 
 
 def main(inputdir):
