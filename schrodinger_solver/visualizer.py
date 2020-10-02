@@ -9,6 +9,7 @@ def wavevisualizer(xx, wavefuncs, energies, pot,
                    expval, stretch=1, xlim=None, ylim=None):
     '''
     Visualizes the calculated wavefunctions.
+
     Args:
         xx (array): contains the x values
         pot (arraayy): contains the interpolated potential
@@ -18,6 +19,7 @@ def wavevisualizer(xx, wavefuncs, energies, pot,
         stretch (float): number for scaling the wavefunctions
         xlim (tuple): the lower and upper limit for the x axis
         ylim (tuple): the lower and upper limit for the y axis
+
     Returns:
         figures of the wavefunctions, the interpolated potential and the
         energies (1) and the expected values and uncertainties for x (2)

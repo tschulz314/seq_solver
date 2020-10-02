@@ -5,7 +5,7 @@ import os.path
 import numpy as np
 
 
-def _read_input(inputdir):
+def read_input(inputdir):
     """Reads in the data for a given quantum system.
 
     Args:
@@ -22,13 +22,15 @@ def _read_input(inputdir):
     inputfile = os.path.join(inputdir, "schrodinger.inp")
     input = open(inputfile, "r")
     seperatedinput = input.read().splitlines()
-    mass = float(seperatedinput[0])
-    xinfo = seperatedinput[1].split()
+    for ii in range(0, 5):
+        seperatedinput[ii] = seperatedinput[ii].split('#')
+    mass = float(seperatedinput[0][0])
+    xinfo = seperatedinput[1][0].split()
     xinfo = list(map(float, xinfo))
-    eigenvalues = seperatedinput[2].split()
+    eigenvalues = seperatedinput[2][0].split()
     eigenvalues = list(map(int, eigenvalues))
-    interptype = str(seperatedinput[3])
-    numinterp = float(seperatedinput[4])
+    interptype = str(seperatedinput[3][0]).replace('\t', '')
+    numinterp = float(seperatedinput[4][0])
     xandpot = np.empty((len(seperatedinput) - 5, 2), dtype=float)
     for ii in range(5, len(seperatedinput)):
         xxandpotentialunorganized = seperatedinput[ii].split()
@@ -38,7 +40,7 @@ def _read_input(inputdir):
     return mass, xinfo, eigenvalues, interptype, numinterp, xandpot
 
 
-def _write_output(energies, xx, wavefunc, expval, pot, inputdir):
+def write_output(energies, xx, wavefunc, expval, pot, inputdir):
     """Creates files of solver results.
 
     Args:

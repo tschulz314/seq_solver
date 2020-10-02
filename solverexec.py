@@ -2,21 +2,30 @@
 Executable python script for solving the one dimensinal schroedinger equation:
 """
 
+import argparse
 import schrodinger_solver.solveio as solveio
 import schrodinger_solver.solver as solver
 
+_DESCRIPTION = 'Script for solving the schrodinger equation'
 
-def main(inputdir):
+
+def main():
     """
     Main function for solving the schroedinger equation.
 
     Args:
-        inputdir (str): name of the input directory
+        inputdir (str): name of the input directory (for parsing)
+
     Returns:
-        files: energies.dat, potential.dat, wavefuncs.dat, expvalues.dat
+        the files energies.dat, potential.dat, wavefuncs.dat, expvalues.dat
         containing the calculated results
     """
-    temp = solveio._read_input(inputdir)
+    parser = argparse.ArgumentParser(description=_DESCRIPTION)
+    msg = 'Directory to "schrodinger.inp" (default: .)'
+    parser.add_argument('-d', '--directory', default='.',
+                        metavar='DIR', help=msg)
+    args = parser.parse_args()
+    temp = solveio.read_input(args.directory)
     interpoltype = temp[3]
     xknown = temp[5][:, 0]
     potknown = temp[5][:, 1]
@@ -28,9 +37,8 @@ def main(inputdir):
     energies, xx, wavefunc, delta = catcher
     wavefunc = solver.normalization(wavefunc, delta)
     expval = solver.expectedvalue(wavefunc, xx, delta)
-    solveio._write_output(energies, xx, wavefunc, expval, pot, inputdir)
+    solveio.write_output(energies, xx, wavefunc, expval, pot, args.directory)
 
 
 if __name__ == "__main__":
-    inputdir = input("Enter the path to the inputfile 'schrodinger.inp': ")
-    main(inputdir)
+    main()

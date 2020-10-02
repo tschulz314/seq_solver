@@ -19,8 +19,8 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('..'))
-
+sys.path.insert(0, os.path.abspath('../'))
+sys.path.insert(0, os.path.abspath('../schrodinger_solver/'))
 
 # -- General configuration ------------------------------------------------
 
@@ -48,7 +48,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'eq_solver docuseq_solver documentation'
+project = 'seq_solver documentation'
 copyright = '2020, Tommy Schulz & Carl Fenski'
 author = 'Tommy Schulz & Carl Fenski'
 

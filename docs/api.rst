@@ -14,5 +14,8 @@ API Documentation
 .. automodule:: visualizer
    :members:
 
+.. automodule:: visualizerexec
+   :members:
+
 .. automodule:: test_solver
    :members:

@@ -7,17 +7,17 @@ import scipy.interpolate
 
 
 def interpolation(interpoltype, xknown, potknown):
-    '''Interpolates the potential for given x and potential refrence values
+    """
+    Interpolates the potential for given x and potential refrence values
 
     Args:
         interpoltype (str): Interpolationtype
                             (linear, cubic spline or polynomial)
         xknown (array): reference x values to interpolate
         potknown (array): reference potential values to interpolate
-
     Returns:
-        pot: function containing the interpolated potential
-    '''
+        the interpolated potential
+    """
     if interpoltype == "linear":
         pot = scipy.interpolate.interp1d(xknown, potknown)
     elif interpoltype == "cspline":
