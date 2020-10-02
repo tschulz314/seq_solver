@@ -1,15 +1,22 @@
 """
 Executable python script for solving the one dimensinal schroedinger equation:
 """
-import solveio
-import solver
+
+import schrodinger_solver.solveio as solveio
+import schrodinger_solver.solver as solver
 
 
 def main(inputdir):
     """
-    Main function for solving the schroedinger equation
+    Main function for solving the schroedinger equation.
+
+    Args:
+        inputdir (str): name of the input directory
+    Returns:
+        files: energies.dat, potential.dat, wavefuncs.dat, expvalues.dat
+        containing the calculated results
     """
-    temp = solveio.read_input(inputdir)
+    temp = solveio._read_input(inputdir)
     interpoltype = temp[3]
     xknown = temp[5][:, 0]
     potknown = temp[5][:, 1]
@@ -21,7 +28,7 @@ def main(inputdir):
     energies, xx, wavefunc, delta = catcher
     wavefunc = solver.normalization(wavefunc, delta)
     expval = solver.expectedvalue(wavefunc, xx, delta)
-    solveio.write_output(energies, xx, wavefunc, expval, pot, inputdir)
+    solveio._write_output(energies, xx, wavefunc, expval, pot, inputdir)
 
 
 if __name__ == "__main__":

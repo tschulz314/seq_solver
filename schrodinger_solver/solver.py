@@ -21,7 +21,8 @@ def interpolation(interpoltype, xknown, potknown):
     if interpoltype == "linear":
         pot = scipy.interpolate.interp1d(xknown, potknown)
     elif interpoltype == "cspline":
-        pot = scipy.interpolate.CubicSpline(xknown, potknown, bc_type='natural')
+        pot = scipy.interpolate.CubicSpline(xknown,
+                                            potknown, bc_type='natural')
     else:
         pot = scipy.interpolate.KroghInterpolator(xknown, potknown)
     return pot
