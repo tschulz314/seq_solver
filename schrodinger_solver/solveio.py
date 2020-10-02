@@ -5,7 +5,7 @@ import os.path
 import numpy as np
 
 
-def read_input(inputdir):
+def _read_input(inputdir):
     """Reads in the data for a given quantum system.
 
     Args:
@@ -38,7 +38,7 @@ def read_input(inputdir):
     return mass, xinfo, eigenvalues, interptype, numinterp, xandpot
 
 
-def write_output(energies, xx, wavefunc, expval, pot, inputdir):
+def _write_output(energies, xx, wavefunc, expval, pot, inputdir):
     """Creates files of solver results.
 
     Args:
@@ -47,7 +47,7 @@ def write_output(energies, xx, wavefunc, expval, pot, inputdir):
 
     Returns:
         files: energies.dat, potential.dat, wavefuncs.dat, expvalues.dat
-        potential.dat and wavefuncs.dat include xx in the first row.
+        containing the calculated results
     """
     np.savetxt(os.path.join(inputdir, "energies.dat"), energies)
     solvedpot = np.empty((len(xx), 2), dtype=float)

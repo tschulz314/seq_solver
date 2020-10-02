@@ -14,7 +14,8 @@ def main(inputdir, stretch, xlim, ylim, inputpdf):
     schroedinger equation.
     """
     xx, wavefuncs, energies, pot, expval = solveio._read_results(inputdir)
-    visualizer.wavevisualizer(xx, wavefuncs, energies, pot, expval, stretch, xlim, ylim)
+    visualizer.wavevisualizer(xx, wavefuncs, energies,
+                              pot, expval, stretch, xlim, ylim)
     if inputpdf == "Y":
         path = os.path.join(inputdir, "schrodinger_plot.pdf")
         plt.savefig(path)
