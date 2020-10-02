@@ -2,8 +2,8 @@
 """
 Routines to test the solver:
 """
-import numpy as np
 import os.path
+import numpy as np
 import pytest
 import schrodinger_solver.solveio as solveio
 import schrodinger_solver.solver as solver
@@ -20,7 +20,7 @@ def get_solver_data(inputdir):
     """
     Routine to solve the schrodinger equation.
     """
-    temp = solveio._read_input(inputdir)
+    temp = solveio.read_input(inputdir)
     interpoltype = temp[3]
     xknown = temp[5][:, 0]
     potknown = temp[5][:, 1]
