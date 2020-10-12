@@ -30,6 +30,7 @@ def read_input(inputdir):
     eigenvalues = seperatedinput[2][0].split()
     eigenvalues = list(map(int, eigenvalues))
     interptype = str(seperatedinput[3][0]).replace('\t', '')
+    interptype = interptype.replace(' ', '')
     numinterp = float(seperatedinput[4][0])
     xandpot = np.empty((len(seperatedinput) - 5, 2), dtype=float)
     for ii in range(5, len(seperatedinput)):
